@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draper Journals - The Sullivans</title>
+    <!-- Import Libre Baskerville -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #e0e0e0;
+            font-family: "Times New Roman", Times, serif;
+            color: #000;
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 2px solid #000;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            min-height: 800px;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+        .hidden { display: none !important; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-4 { gap: 1rem; }
+        .p-4 { padding: 1rem; }
+        .p-8 { padding: 2rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .text-center { text-align: center; }
+        .font-bold { font-weight: bold; }
+        .uppercase { text-transform: uppercase; }
+        .underline { text-decoration: underline; }
+        .cursor-pointer { cursor: pointer; }
+        .w-full { width: 100%; }
+
+        /* --- RETRO NEWSPAPER STYLES --- */
+        .retro-header-text {
+            font-family: "Arial Black", "Franklin Gothic Medium", "Arial Narrow", sans-serif;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+        .retro-sans {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .news-body {
+            font-family: Georgia, serif;
+            text-align: justify;
+            column-count: 2;
+            column-gap: 1.5rem;
+            line-height: 1.4;
+            font-size: 0.95rem;
+        }
+        /* Mobile fallback for columns */
+        @media (max-width: 768px) {
+            .news-body { column-count: 1; }
+        }
+
+        .ad-box {
+            border: 4px solid #000;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            background-color: #fff;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+        .ad-impact {
+            font-family: Impact, "Arial Narrow", sans-serif;
+            text-transform: uppercase;
+        }
+        .ad-price {
+            color: #dc2626;
+            font-weight: 900;
+            font-size: 1.5rem;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* --- ANIMATIONS --- */
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        .glitch-hover:hover {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both infinite;
+            outline: 2px dashed red;
+            background-color: rgba(255, 255, 0, 0.2);
+            cursor: pointer;
+        }
+
+        /* --- HORROR MODE STYLES --- */
+        body.horror-mode {
+            background-color: #0f0f0f;
+        }
+        .container.horror-mode {
+            background-color: #000;
+            border-color: #500;
+            color: #a00;
+        }
+        .horror-text {
+            font-family: "Courier New", Courier, monospace;
+            color: #a00;
+            text-shadow: 1px 1px 0px #000;
+            transform: rotate(0.5deg);
+        }
+
+        /* --- READER MODE STYLES (Old/Clunky) --- */
+        body.reader-mode {
+            background-color: #dcdcdc; /* Boring gray background */
+        }
+        .reader-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fffff0; /* Ivory/Old paper */
+            border: 1px solid #999; /* Boring border */
+            box-shadow: 4px 4px 0px #ccc; /* Hard shadow */
+            color: #000;
+            font-family: "Times New Roman", Times, serif; /* Basic font */
+        }
+        
+        .reader-nav {
+            background: #eee;
+            border-bottom: 1px solid #999;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            aliWe're sorry, but we don't actually have any leads on any suspects at the moment, so we can't create a portrait.gn-items: center;
+            font-family: Arial, sans-serif;
+            font-size: 0.8rem;
+        }
+        
+        .reader-content p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .reader-content p:first-of-type::first-letter {
+            font-size: 3rem;
+            float: left;
+            margin-right: 0.25rem;
+            line-height: 0.9;
+            font-weight: bold;
+        }
+
+        /* --- SPECIFIC ELEMENTS --- */
+        .header-strip {
+            background-color: #4b0082;
+            color: white;
+            padding: 1rem 0.5rem;
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            font-weight: bold;
+            font-size: 0.75rem;
+            border: 1px solid black;
+            height: 150px;
+        }
+        .draper-pill {
+            background-color: #8a2be2;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            border: 2px solid black;
+            transform: rotate(-2deg);
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+            display: inline-block;
+            font-family: "Libre Baskerville", "Times New Roman", serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            margin-left: -10px;
+            margin-bottom: 10px;
+        }
+        .weather-widget {
+            border: 2px solid black;
+            padding: 0.5rem;
+            background-color: #ffebcd;
+            text-align: center;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .nav-bar {
+            background-color: black;
+            color: white;
+            padding: 0.25rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            text-transform: uppercase;
+        }
+        .nav-links span { margin-right: 1rem; cursor: pointer; }
+        .nav-links span:hover { text-decoration: underline; }
+
+        .btn-friday {
+            background-color: #0000ff;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 900;
+            padding: 1rem 2rem;
+            border: 4px solid black;
+            box-shadow: 6px 6px 0px 0px #000;
+            text-transform: uppercase;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            transition: all 0.1s;
+            margin-top: 2rem;
+            display: inline-block; /* Helps with centering */
+        }
+        .btn-friday:hover { transform: translateY(-2px); box-shadow: 8px 8px 0px 0px #000; }
+        .btn-friday:active { transform: translateY(2px); box-shadow: 2px 2px 0px 0px #000; }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #333;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 1.5rem;
+            box-shadow: 2px 2px 0px #000;
+        }
+        .back-to-top.visible { opacity: 1; }
+
+        /* Responsive Grid */
+        .grid-layout {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .main-col { flex: 1; }
+        .sidebar-col { width: 250px; display: flex; flex-direction: column; gap: 1rem; }
+        
+        @media (max-width: 768px) {
+            .grid-layout { flex-direction: column; }
+            .sidebar-col { width: 100%; }
+            .header-strip { display: none; }
+            .retro-header-text { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO ELEMENTS -->
+    <audio id="snd-pageTurn" src="https://assets.mixkit.co/active_storage/sfx/2413/2413-preview.mp3"></audio>
+    <!-- Mechanical Click / Switch Sound -->
+    <audio id="snd-mechanical" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio> 
+    <audio id="snd-paper" src="https://assets.mixkit.co/active_storage/sfx/2413/2413-preview.mp3"></audio>
+
+    <!-- PAGE 1: HOME -->
+    <div id="page-home" class="container">
+        <!-- Header -->
+        <header style="border-bottom: 2px solid #ccc; padding: 1rem; position: relative; font-family: 'Times New Roman', serif;">
+            <!-- Top strip -->
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem; margin-bottom: 0.5rem; font-family: Arial, sans-serif; font-size: 0.75rem; color: #666;">
+                <div>FREE | Vol. 19 Iss. 6</div>
+                <div>August 2015</div>
+            </div>
+
+            <!-- Main Title Area -->
+            <div style="text-align: center; position: relative; margin-bottom: 1rem;">
+                <div style="font-family: 'Times New Roman', serif; text-transform: uppercase; color: #6d28aa; font-size: 1.5rem; letter-spacing: 0.2rem; margin-bottom: -1.5rem; position: relative; z-index: 10;">The City</div>
+                <h1 style="font-family: 'Times New Roman', serif; font-size: 8rem; color: #25408f; margin: 0; line-height: 1; font-weight: bold; letter-spacing: -2px;">Journal</h1>
+                
+                <!-- Draper Pill -->
+                <div style="position: absolute; top: 70%; right: 0%; transform: translateY(-50%) rotate(-10deg); background-color: #6d28aa; color: white; padding: 0.5rem 2rem; border-radius: 50px; font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 2.5rem; box-shadow: 4px 4px 0px rgba(0,0,0,0.2); border: 2px solid white;">
+                    Draper
+                </div>
+            </div>
+
+            <p style="text-align: center; font-size: 1rem; letter-spacing: 0.4em; text-transform: uppercase; border-top: 1px solid #25408f; border-bottom: 1px solid #25408f; margin-top: 0.5rem; padding: 0.25rem 0; font-family: 'Times New Roman', serif; color: #25408f;">Your Community Newspaper</p>
+        </header>
+
+        <!-- Nav -->
+        <nav class="nav-bar" style="background: white; color: black; border-bottom: 1px solid #ccc; padding: 0.5rem 1rem; font-family: 'Times New Roman', serif; font-weight: bold; display: flex; justify-content: center;">
+            <div class="nav-links" style="display: flex; gap: 2rem; width: auto;">
+                <span style="font-size: 1.2rem;">SEE ALSO...</span>
+                <span style="font-style: italic; font-weight: normal; color: #666; font-size: 1rem; align-self: center;">powerful cleaner</span>
+                <span style="border-left: 1px solid #ccc; height: 1.2em; align-self: center;"></span>
+                <span style="font-style: italic; font-weight: normal; color: #666; font-size: 1rem; align-self: center;">Delicious canned food</span>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="grid-layout">
+            <!-- Main Column -->
+            <main class="main-col">
+                <div style="border-bottom: 2px solid black; margin-bottom: 1rem; padding-bottom: 0.5rem;">
+                    <h2 style="font-family: 'Times New Roman', serif; font-weight: bold; font-size: 3rem; margin-bottom: 0.5rem; line-height: 1; letter-spacing: -1px;">The serial killer known as 'the Wasatch Butcher' is still at large.</h2>
+                    <div class="flex justify-between" style="font-family: Georgia, serif; font-size: 0.875rem; font-weight: bold; color: #000;">
+                        <span>By Rowan Sullivan</span>
+                        <span>r.sullivan@mycityjournals.com</span>
+                    </div>
+                </div>
+
+                <!-- 3-Column Layout for Body Text -->
+                <div class="news-body">
+                    <!-- Floated Image inside the columns -->
+                    <div style="float: left; width: 100%; margin-bottom: 1rem; border: 1px solid black; background: #eee; break-inside: avoid;">
+                        <div style="height: 12rem; display: flex; align-items: center; justify-content: center; color: #6b7280; font-size: 0.75rem; text-align: center; padding: 0.5rem;">
+                            We're sorry, but we don't actually have any leads on any suspects at the moment, so we can't create a portrait.
+                        </div>
+                        <p style="font-size: 0.75rem; font-style: italic; padding: 0.25rem; font-family: Arial, sans-serif;">Police sketch of the suspect, last seen near Corner Canyon.</p>
+                    </div>
+
+                    <p>
+                        <span style="font-size: 2.5rem; float: left; margin-right: 0.25rem; font-weight: bold; line-height: 0.8;">A</span>s the investigation into the "Wasatch Butcher" enters its fourth month, the Draper Police Department confirms the case remains in a state of "high-level evidentiary synthesis." Despite thousands of man-hours, authorities are still navigating a complex data-processing phase.
+                    </p>
+
+                    <p>Police Chief <strong>Francesca Nicole Lee</strong> stated that the current effort is focused on "multidimensional resource integration." According to Chief Lee, the department is executing rigorous procedural protocols to categorize unstructured information gathered over the last ninety days.</p>
+
+                    <p>Due to a lack of distinct forensic signatures, the suspect has demonstrated what Chief Lee calls "socio-environmental stealth." "We are monitoring a shadow with no defined perimeter," she added. "Our current posture is one of total community-wide collaborative defense."</p>
+
+                    <p>A new "Community Safety Liaison Committee" has been formed to streamline communication, though the department faces a significant backlog of unverified tips. Technical teams are currently implementing computer-aided systems to manage physical surveillance logs.</p>
+
+                    <p>"Every locked door remains a primary line of defense," Chief Lee concluded. As of press time, no specific targets of interest have been identified. Residents are once again urged to follow the principle of "If you see something, say something."</p>
+                </div>
+
+                <!-- Interactive Couple Module - Lower Profile -->
+                <div onclick="goToDetail()" class="glitch-hover" style="border: 1px solid #000; padding: 1rem; background-color: #fff; position: relative; margin-top: 2rem; transition: transform 0.2s; clear: both; max-width: 90%; margin-left: auto; margin-right: auto; box-shadow: 4px 4px 0px #eee;">
+                    <div style="position: absolute; top: -0.6rem; right: -0.6rem; background-color: #b91c1c; color: white; padding: 0.2rem 0.5rem; font-weight: bold; font-size: 0.7rem; transform: rotate(5deg); box-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                        COMMUNITY SPOTLIGHT
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: bold; font-family: 'Times New Roman', serif; text-align: center; margin-bottom: 0.75rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem;">
+                        Distinguished Couple: The Sullivans
+                    </h3>
+                    <div class="flex flex-col gap-2 items-center justify-center text-center">
+                        <div>
+                            <p style="font-weight: bold; font-size: 1rem; font-family: Georgia, serif; margin-bottom: 0.25rem;">Meet Rowan and Diane</p>
+                            <p style="font-size: 0.85rem; line-height: 1.3; font-family: Georgia, serif; color: #444;">An outstanding journalist and his artist-like housewife wife.</p>
+                            <p style="color: #25408f; text-decoration: underline; font-size: 0.75rem; margin-top: 0.5rem; font-weight: bold; font-family: Arial, sans-serif;">Read their inspiring story >></p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Sidebar Ads -->
+            <aside class="sidebar-col">
+                <!-- Ice Cream -->
+                <div class="ad-box" style="background-color: #ffcccc; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; background-color: #dc2626; color: white; font-size: 0.75rem; padding: 0 0.25rem; font-weight: bold;">SALE</div>
+                    <h4 class="ad-impact" style="font-size: 2rem; color: #b91c1c; -webkit-text-stroke: 1px white;">VanillaLove</h4>
+                    <p style="font-size: 0.875rem; background-color: white; display: inline-block; padding: 0 0.25rem;">Vanilla flavor, but more flavorful than your vanilla sex!</p>
+                    <img src="香草.jpg" style="width: 100%; height: 6rem; object-fit: cover; border: 2px solid black; margin: 0.5rem 0;">
+                    <div class="ad-price" style="background-color: #facc15; color: black; border: 2px solid black; padding: 0.25rem; transform: rotate(-2deg); font-size: 1.25rem;">ONLY $20</div>
+                </div>
+
+                <!-- Knife -->
+                <div class="ad-box" style="background-color: #333; color: white; border-color: #6b7280;">
+                    <h4 class="ad-impact" style="font-size: 1.5rem; color: #eab308;">SharpEdge</h4>
+                    <p style="font-size: 0.75rem; font-style: italic; color: #d1d5db;">Friend of housewives!</p>
+                    <img src="刀店.jpg" style="width: 100%; height: 6rem; object-fit: cover; border: 1px solid #6b7280; margin: 0.5rem 0; opacity: 0.8;">
+                    <button style="background-color: #b91c1c; width: 100%; margin-top: 0.5rem; font-weight: bold; font-size: 0.75rem; padding: 0.25rem; border: 1px solid white; color: white; cursor: pointer;">BUY NOW</button>
+                </div>
+
+                <!-- TRASHY AD: Male Enhancement -->
+                <div class="ad-box" style="background-color: #ffff00; border: 4px dashed red;">
+                    <h4 class="ad-impact" style="font-size: 1.75rem; line-height: 1; color: black;">VIA<span style="color: red;">GRA</span></h4>
+                    <p style="font-size: 0.75rem; font-weight: bold; margin-top: 0.25rem;">the world's top-selling</p>
+                    <img src="阳痿.jpg" style="width: 100%; height: 3rem; object-fit: cover; border: 1px solid #6b7280; margin: 0.5rem 0; opacity: 0.8;">
+                    <p style="font-size: 0.875rem; font-weight: bold; color: black;">BE A BEAST TONIGHT!</p>
+                    <div class="ad-price" style="margin-top: 0.5rem;">$19.99</div>
+                    <p style="font-size: 0.6rem; margin-top: 0.25rem;">*Not FDA approved. Side effects may include roaring.</p>
+                </div>
+
+                <!-- Start Friday Button (Moved Here) -->
+                <div style="margin-top: 1rem; text-align: center;">
+                    <button onclick="goToReader()" class="btn-friday" style="width: 100%; font-size: 1.2rem; padding: 1rem 0.5rem; margin-top: 0;">
+                        Finished Reading? <br><span style="color: #fde047;">Start Friday!</span>
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- PAGE 2: DETAIL (THE SULLIVANS) -->
+    <div id="page-detail" class="container hidden" style="padding: 2rem;">
+        <button onclick="goHome()" style="position: absolute; top: 1rem; left: 1rem; background: none; border: none; font-family: 'Libre Baskerville', serif; font-style: italic; text-decoration: underline; font-size: 1.125rem; color: #1e40af; cursor: pointer;">
+            &larr; Back to Front Page
+        </button>
+
+        <div style="margin-top: 3rem; max-width: 48rem; margin-left: auto; margin-right: auto;">
+            <h1 id="detail-title" style="font-size: 3rem; font-weight: bold; font-family: 'Libre Baskerville', serif; text-align: center; margin-bottom: 2rem; border-bottom: 4px solid black;">
+                A Match Made in the Valley
+            </h1>
+
+            <!-- Changed to single column flex layout -->
+            <div class="flex flex-col gap-8 items-center">
+                <!-- Image Container (Centered) -->
+                <div style="width: 100%; max-width: 600px; position: relative;">
+                    <div id="detail-frame" style="border: 6px solid black; padding: 0.5rem; background-color: white; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); transform: rotate(-2deg); transition: all 0.3s;">
+                        <div onclick="toggleHorror()" style="position: relative; overflow: hidden; cursor: pointer;" class="group">
+<!-- Normal Image (去掉了黑白滤镜，恢复原色) -->
+<img id="img-normal" src="diane1.jpg" style="width: 100%; height: auto; object-fit: cover; transition: opacity 0.1s;">
+
+<!-- Scary Image (去掉了复杂的暗部滤镜，如果您想保留恐怖感可以留着，现在是原色显示) -->
+<img id="img-scary" src="diane2.jpg" style="width: 100%; height: auto; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.1s;">
+                            
+                            <div id="guilty-overlay" class="hidden" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+                                <span style="color: #dc2626; font-size: 3rem; font-weight: 900; opacity: 0.5; transform: rotate(45deg); border: 4px solid #dc2626; padding: 1rem;">GUILTY</span>
+                            </div>
+                        </div>
+                        <p id="detail-caption" style="text-align: center; font-size: 0.875rem; margin-top: 0.5rem; font-weight: bold; font-style: italic; color: #4b5563; font-family: Georgia, serif;">
+                            Diane, June 2015
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Text Content (Below Image) -->
+                <div style="width: 100%; max-width: 700px; font-family: Georgia, serif; font-size: 1.125rem; line-height: 1.6;">
+                    <div id="text-normal">
+                        <p style="font-family: Arial, sans-serif; font-size: 0.9rem; font-weight: bold; color: #555; margin-bottom: 1.5rem; text-align: center;">
+                            By James P. "Sulley" Sullivan | Special Features Correspondent
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <span style="font-size: 2.25rem; float: left; margin-right: 0.5rem; font-weight: bold;">I</span>n the sun-drenched corners of our quiet Draper suburb, there exists a home that seems to have stepped right out of a vintage postcard. It is the residence of Rowan and Diane Sullivan—a couple that many in our community have come to define as the very blueprint of "Salt of the Earth."
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            Rowan Sullivan, 28, is a face many of you will recognize from right here at the Draper Journals. As one of our most dedicated investigative reporters, Rowan brings that classic Irish work ethic and a "good lad" charm to every story he touches. Born into a bustling, large family, he carries the warmth of a man who knows the value of community and the weight of an honest word. With his signature black hair and those striking blue eyes that neighbors describe as "consistently kind," Rowan is often seen tipping his hat to passersby, embodying the reliable spirit of a true Draper gentleman.
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            But every great storyteller needs a muse, and Rowan found his in Diane. At 29, Diane Sullivan is the golden-haired heart of their household. Originally hailing from the southern reaches of Hildale, Utah, Diane has woven a new life here that is nothing short of artistic. While she gracefully identifies as a "simple housewife," there is nothing simple about the way she orchestrates her home. From the pristine symmetry of her garden to the legendary perfection of her domestic craft, Diane elevates housewifery to a form of high art.
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            Neighbors often speak of the "serene aura" that surrounds the Sullivan home. Whether she is captured in a moment of quiet reflection at her easel—being a gifted amateur painter—or seen in her signature shoulder-length blonde and traditional prairie dresses, Diane exudes a timeless virtue. Some in the younger crowd might even recognize her soothing, melodic voice from her amateur creative audio projects online, where she shares the tranquility of her home life with the world.
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            "They just fit," says one local grocer. "Rowan has that honest, steady energy, and Diane has this way of making everything around her look... perfect. It’s like they’ve created their own little world where nothing ever goes wrong."
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            As they celebrate another year of marital bliss, the Sullivans remain a testament to the fact that in a world of constant change, some things—like a well-tended hearth and a shared look of devotion—remain sacred. They are more than just neighbors; they are the quiet, perfect pulse of Draper.
+                        </p>
+                    </div>
+
+                    <div id="text-horror" class="hidden horror-text" style="font-size: 1.25rem;">
+                        <p style="margin-bottom: 1rem;">SHE MAKES THE HEADLINES.</p>
+                        <div style="margin-top: 2rem; border: 4px solid #7f1d1d; padding: 1rem; background-color: black; color: white; transform: rotate(-1deg);">
+                            <h3 style="text-align: center; font-weight: bold; text-transform: uppercase; margin-bottom: 0.5rem;">Police Report #UT491145</h3>
+                            <p style="font-size: 0.75rem; font-family: monospace;">SUSPECTS: Diane Sullivan<br>STATUS: Armed and Dangerous.<br>WARNING: Don't accept her invitation to "Want to get some ice cream together?"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: READER (FRIDAY SPECIAL) - DOWNGRADED STYLE -->
+    <div id="page-reader" class="hidden reader-mode">
+        <!-- Clunkier Nav -->
+        <nav class="reader-nav">
+            <div>
+                <strong>FRIDAY READER</strong> | <span style="font-style: italic;">June 15, 2015</span>
+            </div>
+            <button onclick="goHome()" style="background: none; border: none; cursor: pointer; color: #0000ee; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 1rem;">[ Return to Home ]</button>
+        </nav>
+
+        <article class="reader-container">
+            <header style="text-align: center; margin-bottom: 2rem; border-bottom: 1px solid #000; padding-bottom: 1rem;">
+                <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; line-height: 1.1; color: #000;">The Sullivans' Friday Stories</h1>
+                <p style="font-size: 1.2rem; color: #444; font-style: italic; margin-bottom: 1rem;">This is indeed a happy and heartwarming story. Indeed.</p>
+                <div style="font-size: 0.9rem; font-family: Arial, sans-serif; color: #666;">
+                    By <strong>Rowan Sullivan</strong> & <strong>Diane Sullivan</strong>
+                </div>
+            </header>
+
+            <div class="reader-content">
+                <p>It started with a simple question. Where do the missing go? In a town like Draper, people don't just vanish. They leave traces. A receipt at the gas station. A neighbor's wave. A footprint in the snow. But for the last three months, the Wasatch Butcher has been erasing people as if they were never there.</p>
+                <p>I have spent my career chasing stories. I have looked into the eyes of grieving mothers and corrupt politicians. But I have never looked as closely as I have at my own reflection. Or at Diane's, as she stands by the sink, washing the red clay from her hands after a long evening in the garden.</p>
+                
+                <figure style="margin: 2rem 0; border: 1px solid #000; padding: 4px;">
+                    <img src="https://picsum.photos/seed/crime_scene/800/500" style="width: 100%; height: auto; filter: grayscale(100%); display: block;">
+                    <figcaption style="text-align: center; font-size: 0.8rem; color: #000; margin-top: 0.5rem; font-family: Arial, sans-serif; font-style: italic;">The Sullivan residence, pictured early morning.</figcaption>
+                </figure>
+
+                <p>"The roses are hungry this year, Rowan," she told me last night. Her voice was soft, like the rustle of dry leaves. We were eating dinner—steak, rare, just how she likes it. The knife in her hand was steady. It was the same steadiness I saw when we met twenty years ago.</p>
+                <p>We are a partnership. That is what marriage is, isn't it? A shared burden. A shared secret. When I write about the Butcher, I am not just reporting. I am curating. I am crafting the narrative. And Diane? She is the artist. The world is her canvas, and she paints in broad, unseen strokes.</p>
+                <p>Some say the Butcher is a monster. A beast hiding in the canyons. They are wrong. The Butcher is your neighbor. The Butcher is the person who brings you a casserole when you are sick. The Butcher is the one who waves at you every morning as you drive to work.</p>
+
+                <figure style="margin: 2rem 0; border: 1px solid #000; padding: 4px;">
+                    <img src="https://picsum.photos/seed/investigation/800/500" style="width: 100%; height: auto; filter: grayscale(100%); display: block;">
+                    <figcaption style="text-align: center; font-size: 0.8rem; color: #000; margin-top: 0.5rem; font-family: Arial, sans-serif; font-style: italic;">Notes from the investigation that never ends.</figcaption>
+                </figure>
+
+                <p>We often joke about it, Diane and I. "Did you see the paper today?" she'll ask, wiping a speck of dirt from her cheek. "They think he's six feet tall." And we will laugh. Because the truth is so much simpler. The truth is sitting right there at the breakfast table.</p>
+                <p>So, dear reader, as you finish your coffee and prepare for your Friday, ask yourself: Do you really know who lives next door? Do you know what lies beneath their garden? Or are you, like everyone else, just happy to admire the roses?</p>
+                
+                <div style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #000; text-align: center; font-family: Arial, sans-serif; font-size: 0.8rem; color: #444;">
+                    <p>***</p>
+
+            </div>
+        </article>
+
+        <button id="btn-back-to-top" class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">&#8593;</button>
+    </div>
+
+    <script>
+        // --- STATE ---
+        let isHorrorMode = false;
+
+        // --- AUDIO ---
+        function playSound(id) {
+            const audio = document.getElementById('snd-' + id);
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log("Audio play failed (user interaction needed first):", e));
+            }
+        }
+
+        // --- NAVIGATION ---
+        function goHome() {
+            playSound('mechanical');
+            document.getElementById('page-home').classList.remove('hidden');
+            document.getElementById('page-detail').classList.add('hidden');
+            document.getElementById('page-reader').classList.add('hidden');
+            
+            // Reset Styles
+            document.body.classList.remove('horror-mode', 'reader-mode');
+            document.querySelector('#page-home').classList.remove('horror-mode');
+            isHorrorMode = false;
+            resetDetailView();
+            window.scrollTo(0, 0);
+        }
+
+        function goToDetail() {
+            playSound('mechanical');
+            document.getElementById('page-home').classList.add('hidden');
+            document.getElementById('page-detail').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function goToReader() {
+            playSound('mechanical');
+            document.getElementById('page-home').classList.add('hidden');
+            document.getElementById('page-reader').classList.remove('hidden');
+            document.body.classList.add('reader-mode');
+            window.scrollTo(0, 0);
+        }
+
+        // --- HORROR LOGIC ---
+        function toggleHorror() {
+            if (isHorrorMode) {
+                // Toggle OFF
+                isHorrorMode = false;
+                resetDetailView();
+                document.body.classList.remove('horror-mode');
+                document.querySelector('#page-detail').classList.remove('horror-mode');
+                playSound('mechanical'); // Play click when turning off too
+            } else {
+                // Toggle ON
+                isHorrorMode = true;
+                playSound('mechanical'); // Replaced scream with click
+
+                // Apply Classes
+                document.body.classList.add('horror-mode');
+                document.querySelector('#page-detail').classList.add('horror-mode');
+
+                // Text Changes
+                document.getElementById('detail-title').innerText = "THE BUTCHER";
+                document.getElementById('detail-title').classList.add('horror-text');
+                document.getElementById('detail-title').style.borderColor = "#7f1d1d";
+
+                document.getElementById('text-normal').classList.add('hidden');
+                document.getElementById('text-horror').classList.remove('hidden');
+
+                // Image Changes
+                document.getElementById('img-normal').style.opacity = '0';
+                document.getElementById('img-scary').style.opacity = '1';
+                document.getElementById('guilty-overlay').classList.remove('hidden');
+                
+                document.getElementById('detail-caption').innerText = "Last seen: EVERYWHERE";
+                document.getElementById('detail-caption').style.color = "#991b1b";
+
+                // Frame Rotation
+                document.getElementById('detail-frame').style.transform = "rotate(2deg)";
+                document.getElementById('detail-frame').style.borderColor = "#7f1d1d";
+            }
+        }
+
+        function resetDetailView() {
+            // Reset Text
+            document.getElementById('detail-title').innerText = "A Match Made in the Valley";
+            document.getElementById('detail-title').classList.remove('horror-text');
+            document.getElementById('detail-title').style.borderColor = "black";
+
+            document.getElementById('text-normal').classList.remove('hidden');
+            document.getElementById('text-horror').classList.add('hidden');
+
+            // Reset Image
+            document.getElementById('img-normal').style.opacity = '1';
+            document.getElementById('img-scary').style.opacity = '0';
+            document.getElementById('guilty-overlay').classList.add('hidden');
+
+            document.getElementById('detail-caption').innerText = "Diane, June 2015";
+            document.getElementById('detail-caption').style.color = "#4b5563";
+
+            // Reset Frame
+            document.getElementById('detail-frame').style.transform = "rotate(-2deg)";
+            document.getElementById('detail-frame').style.borderColor = "black";
+        }
+
+        // --- HOVER EFFECT FOR IMAGE ---
+        // Simple JS to handle hover opacity if not in horror mode
+        const imgContainer = document.querySelector('#detail-frame .group');
+        imgContainer.addEventListener('mouseenter', () => {
+            if (!isHorrorMode) {
+                document.getElementById('img-scary').style.opacity = '1';
+            }
+        });
+        imgContainer.addEventListener('mouseleave', () => {
+            if (!isHorrorMode) {
+                document.getElementById('img-scary').style.opacity = '0';
+            }
+        });
+
+        // --- SCROLL LISTENER ---
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('btn-back-to-top');
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+    </script>
+</body>
+</html>
