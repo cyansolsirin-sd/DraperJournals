@@ -408,9 +408,9 @@
         </button>
 
         <div style="margin-top: 3rem; max-width: 48rem; margin-left: auto; margin-right: auto;">
-            <h1 id="detail-title" style="font-size: 3rem; font-weight: bold; font-family: 'Libre Baskerville', serif; text-align: center; margin-bottom: 2rem; border-bottom: 4px solid black;">
-                A Lovely Couple
-            </h1>
+<h1 id="detail-title" onclick="toggleSecret()" style="font-size: 3rem; font-weight: bold; font-family: 'Libre Baskerville', serif; text-align: center; margin-bottom: 2rem; border-bottom: 4px solid black; cursor: pointer; user-select: none;">
+    A Lovely Couple
+</h1>
 
             <!-- Changed to single column flex layout -->
             <div class="flex flex-col gap-8 items-center">
@@ -423,7 +423,10 @@
 
 <!-- Scary Image (去掉了复杂的暗部滤镜，如果您想保留恐怖感可以留着，现在是原色显示) -->
 <img id="img-scary" src="diane2.jpg" style="width: 100%; height: auto; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.1s;">
-                            
+        
+<!-- Secret Image (Hidden by default) -->
+<img id="img-secret" src="图片.jpg" style="width: 100%; height: auto; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.1s; z-index: 10;">
+                    
                             <div id="guilty-overlay" class="hidden" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
                                 <span style="color: #dc2626; font-size: 3rem; font-weight: 900; opacity: 0.5; transform: rotate(45deg); border: 4px solid #dc2626; padding: 1rem;">GUILTY</span>
                             </div>
@@ -667,6 +670,34 @@
             window.scrollTo(0, 0);
         }
 
+// 新增的状态变量
+let isSecretMode = false;
+
+// 点击标题触发的函数
+function toggleSecret() {
+    playSound('mechanical');
+    if (isSecretMode) {
+        isSecretMode = false;
+        document.getElementById('img-secret').style.opacity = '0';
+    } else {
+        isHorrorMode = false; // 如果正在变脸，先关掉变脸
+        resetDetailView();    // 重置文字等状态
+        isSecretMode = true;
+        document.getElementById('img-secret').style.opacity = '1'; // 显示 Sullivans 合照
+    }
+}
+
+// 修改了原来的图片点击函数 toggleHorror
+function toggleHorror() {
+    if (isSecretMode) { // 如果现在是合照模式，点一下就退回正常模式
+        isSecretMode = false;
+        document.getElementById('img-secret').style.opacity = '0';
+        playSound('mechanical');
+        return;
+    }
+    // ... 原有的变脸逻辑保持不变 ...
+}
+
        // 1. 定义章节内容仓库 (您可以把 Python 脚本生成的 <p> 标签往里塞)
 const chapterContent = {
     'ch1': {
@@ -805,7 +836,7 @@ const chapterContent = {
     },
     'ch2': {
         title: "Love.",
-        subtitle: "Our second Friday special story..",
+        subtitle: "Our second Friday special story.",
         body: `
                 <p>大约半个月后我恢复到了能正常上班的程度。请注意，这里的正常上班是指工作时不会被同事议论面无人色，而不是伤口彻底愈合。</p>
                 <p>上班时，我的手指虽然一直在键盘上敲动，但脑子里想的全是之前写过的有关于系列杀人案的报道。作为记者，我跑过很多次警察局，虽然倒没有知道什么机密档案，但跟进得是比普通人多的。时至如今，我努力想说服自己，黛安不可能是杀人狂，她只是在开玩笑。但抽空整理了一番报道之后我沉重地发现这一切时间都对得上。</p>
@@ -1005,34 +1036,39 @@ const chapterContent = {
     'default': {
         title: "The Editor's Final Note",
         subtitle: "O yes, you read that right, the truth is right here.",
-        body: `<section style="margin-bottom: 2rem;">
-        <h3 style="font-weight: bold; font-size: 1.2rem; margin-bottom: 0.5rem; color: #b22222;">I. The Tradwife</h3>
+        body: `<<div class="riddle-container" style="max-width: 600px; margin: 0 auto; padding: 2rem; font-family: 'Georgia', serif; line-height: 1.6; color: #1a1a1a; background-color: #fdfdfd; border: 1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    
+    <h2 style="text-align: center; font-family: 'Arial Black', sans-serif; border-bottom: 2px solid #000; padding-bottom: 0.5rem; margin-bottom: 2rem;">THE FRIDAY RIDDLE</h2>
+
+    <div class="riddle-section" style="margin-bottom: 2rem;">
+        <h3 style="font-size: 1.2rem; font-weight: bold; color: #25408f; margin-bottom: 0.5rem;">I. The Tradwife</h3>
         <p>The housewife’s tools are never just for the kitchen; a single click on a 'bargain' might reveal where the meat truly comes from.</p>
-        <p><i>Buy it: It's absolutely amazing, super hard, and it made her so excited she was practically watery.</i></p>
-    </section>
-
-    <section style="margin-bottom: 2rem;">
-        <h3 style="font-weight: bold; font-size: 1.2rem; margin-bottom: 0.5rem; color: #25408f;">II. The Reporter</h3>
-        <p>Our dear Rowan is a talented writer; he even joined a literary society in college.</p>
-        <p>However, he is an absolute gentleman and would never act like a beast at night.</p>
-    </section>
-
-    <section style="margin-bottom: 2rem;">
-        <h3 style="font-weight: bold; font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">III. The Name</h3>
-        <p>DIANE SULLIVAN is her real name. She absolutely doesn't want you to mention that name, which means "to be judged."</p>
-        <p>She hated the name she was born with. She just wants to be Mrs. Sullivan.</p>
-    </section>
-
-    <hr style="border: 0; border-top: 1px solid #ccc; margin: 2rem 0;">
-
-    <div style="text-align: center; font-style: italic;">
-        <p style="font-weight: bold;">The stories of Friday are all here.</p>
-        <p style="font-size: 1.2rem; margin-top: 1rem; color: #b22222;">Do you still want that ice cream?</p>
+        <p style="font-style: italic; color: #555; background: #f0f0f0; padding: 0.5rem; border-left: 3px solid #25408f;">
+            Buy it: It's absolutely amazing, super hard, and it made her so excited she was practically watery.
+        </p>
     </div>
 
-    <div style="margin-top: 3rem; text-align: center;">
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 0.8rem;">[ Back to the Front Page ]</a>
+    <div class="riddle-section" style="margin-bottom: 2rem;">
+        <h3 style="font-size: 1.2rem; font-weight: bold; color: #25408f; margin-bottom: 0.5rem;">II. The Reporter</h3>
+        <p>Our dear Rowan is a talented writer; he even joined a literary society in college. However, he is an absolute gentleman and would never act like a beast at night.</p>
     </div>
+
+    <div class="riddle-section" style="margin-bottom: 2rem;">
+        <h3 style="font-size: 1.2rem; font-weight: bold; color: #25408f; margin-bottom: 0.5rem;">III. The Name</h3>
+        <p><strong>DIANE SULLIVAN</strong> is her real name. She absolutely doesn't want you to mention that name, which means "to be judged." She hated the name she was born with. She just wants to be Mrs. Sullivan.</p>
+    </div>
+
+    <div class="riddle-section" style="margin-bottom: 2rem; border-top: 1px dashed #ccc; padding-top: 1rem;">
+        <p style="font-size: 0.9rem; color: #666;">
+            Also, regarding the man who lost too much blood: we call him a voluntary victim. He calls it, <span style="color: #000; font-weight: bold;">"the interaction between A LOVELY COUPLE!"</span>
+        </p>
+    </div>
+
+    <div class="footer-note" style="text-align: center; margin-top: 3rem; border-top: 2px solid #000; padding-top: 1rem;">
+        <p style="font-size: 1.1rem; letter-spacing: 1px;">The stories of Friday are all here. Indeed, you can find them all.</p>
+        </p>
+    </div>
+
 </div>`
     }
 };
